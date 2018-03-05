@@ -1,7 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(turtlesim)
 
-find_package(catkin REQUIRED COMPONENTS geometry_msgs message_generation rosconsole roscpp roscpp_serialization roslib rostime std_msgs std_srvs)
+find_package(catkin REQUIRED COMPONENTS 
+	geometry_msgs 
+	message_generation 
+	rosconsole 
+	roscpp 
+	roscpp_serialization 
+	roslib 
+	rostime 
+	std_msgs 
+	std_srvs)
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Boost REQUIRED COMPONENTS thread)
@@ -10,13 +19,18 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 add_message_files(DIRECTORY msg FILES
-                  Color.msg Pose.msg)
+                  Color.msg 
+                  Pose.msg
+                  Circle.msg)
 add_service_files(DIRECTORY srv FILES
                   Kill.srv
                   SetPen.srv
                   Spawn.srv
                   TeleportAbsolute.srv
-                  TeleportRelative.srv)
+                  TeleportRelative.srv
+                  SpawnCircle.srv
+		          RemoveCircle.srv
+		          GetCircles.srv)
 generate_messages(DEPENDENCIES geometry_msgs std_msgs std_srvs)
 
 catkin_package(CATKIN_DEPENDS geometry_msgs message_runtime std_msgs std_srvs)
@@ -46,6 +60,10 @@ add_dependencies(draw_square turtlesim_gencpp)
 add_executable(mimic tutorials/mimic.cpp)
 target_link_libraries(mimic ${catkin_LIBRARIES})
 add_dependencies(mimic turtlesim_gencpp)
+add_executable(tutorial_draw_circle tutorials/tutorial_draw_circle.cpp)
+target_link_libraries(tutorial_draw_circle ${catkin_LIBRARIES})
+add_executable(tutorial_delete_cicle tutorials/tutorial_delete_cicle.cpp)
+target_link_libraries(tutorial_delete_cicle ${catkin_LIBRARIES})
 
 install(TARGETS turtlesim_node turtle_teleop_key draw_square mimic
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

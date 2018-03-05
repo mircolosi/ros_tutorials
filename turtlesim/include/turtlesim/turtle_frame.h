@@ -41,6 +41,9 @@
 # include <std_srvs/Empty.h>
 # include <turtlesim/Spawn.h>
 # include <turtlesim/Kill.h>
+# include <turtlesim/SpawnCircle.h>
+# include <turtlesim/RemoveCircle.h>
+# include <turtlesim/GetCircles.h>
 # include <map>
 
 # include "turtle.h"
@@ -74,6 +77,9 @@ private:
   bool resetCallback(std_srvs::Empty::Request&, std_srvs::Empty::Response&);
   bool spawnCallback(turtlesim::Spawn::Request&, turtlesim::Spawn::Response&);
   bool killCallback(turtlesim::Kill::Request&, turtlesim::Kill::Response&);
+  bool spawnCircleCallback(turtlesim::SpawnCircle::Request&, turtlesim::SpawnCircle::Response&);
+  bool removeCircleCallback(turtlesim::RemoveCircle::Request&, turtlesim::RemoveCircle::Response&);
+  bool getCirclesCallback(turtlesim::GetCircles::Request&, turtlesim::GetCircles::Response&);
 
   ros::NodeHandle nh_;
   QTimer* update_timer_;
@@ -88,13 +94,19 @@ private:
   ros::ServiceServer reset_srv_;
   ros::ServiceServer spawn_srv_;
   ros::ServiceServer kill_srv_;
-
+  ros::ServiceServer circle_srv_;
+  ros::ServiceServer remove_circle_srv_;
+  ros::ServiceServer get_circle_srv_;
+  
   typedef std::map<std::string, TurtlePtr> M_Turtle;
   M_Turtle turtles_;
   uint32_t id_counter_;
 
   QVector<QImage> turtle_images_;
 
+  typedef std::map<u_int8_t, QPointF> M_Circle;
+  M_Circle circles_;
+  
   float meter_;
   float width_in_meters_;
   float height_in_meters_;

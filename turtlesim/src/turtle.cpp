@@ -46,7 +46,7 @@ Turtle::Turtle(const ros::NodeHandle& nh, const QImage& turtle_image, const QPoi
 , orient_(orient)
 , lin_vel_(0.0)
 , ang_vel_(0.0)
-, pen_on_(true)
+, pen_on_(false)
 , pen_(QColor(DEFAULT_PEN_R, DEFAULT_PEN_G, DEFAULT_PEN_B))
 {
   pen_.setWidth(3);
